@@ -14,7 +14,8 @@ const GuessedWords = ({ guessedWords }) => {
         <table className="table table-dark table-striped table-sm">
           <thead>
             <tr>
-              <th>Guess</th> <th>Matching Letters</th>
+              <th>Guess</th> 
+              <th>Matching Letters</th>
             </tr>
           </thead>
           <tbody>
