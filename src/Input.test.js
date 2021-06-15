@@ -19,10 +19,43 @@ const setup = (props = {}) => {
   return shallow(<Input {...setupProps} />);
 };
 
-it("should render without error", () => {
-  const wrapper = setup();
-  const component = findByTestAttr(wrapper, "component-input");
-  expect(component.length).toBe(1);
+describe("render", () => {
+  describe("success is true", () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup({ success: true });
+    });
+    it("should render without error", () => {
+      const component = findByTestAttr(wrapper, "component-input");
+      expect(component.length).toBe(1);
+    });
+    it("should not show input box", () => {
+      const inputBox = findByTestAttr(wrapper, "input-box");
+      expect(inputBox.exists()).toBe(false);
+    });
+    it("should not show submit button", () => {
+      const submitButton = findByTestAttr(wrapper, "submit-button");
+      expect(submitButton.exists()).toBe(false);
+    });
+  });
+  describe("success is false", () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup({ success: false });
+    });
+    it("should render without error", () => {
+      const component = findByTestAttr(wrapper, "component-input");
+      expect(component.length).toBe(1);
+    });
+    it("should show input box", () => {
+      const inputBox = findByTestAttr(wrapper, "input-box");
+      expect(inputBox.exists()).toBe(true);
+    });
+    it("should show submit button", () => {
+      const submitButton = findByTestAttr(wrapper, "submit-button");
+      expect(submitButton.exists()).toBe(true);
+    });
+  });
 });
 
 it("should not throw warning with expected props", () => {
