@@ -1,6 +1,7 @@
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import React from "react";
-import { findByTestAttr, checkProps } from "../test/testUtils";
+import { findByTestAttr, checkProps, storeFactory } from "../test/testUtils";
+import { Provider } from "react-redux";
 import Input from "./Input";
 
 // mock entire module for destructuring useState on import
@@ -14,9 +15,10 @@ const defaultProps = {
   secretWord: "train",
 };
 
-const setup = (props = {}) => {
+const setup = (initialState={}, props={}) => {
+  const store = storeFactory(initialState);
   const setupProps = { ...defaultProps, ...props };
-  return shallow(<Input {...setupProps} />);
+  return mount(<Provider store={store}><Input {...setupProps} /></Provider>);
 };
 
 describe("render", () => {
@@ -72,7 +74,7 @@ describe("state controlled input field", () => {
     mockSetCurrentGuess.mockClear();
     originalUseState = React.useState;
     React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
-    wrapper = setup();
+    wrapper = setup({ success: false });
   });
 
   afterEach(() => {
