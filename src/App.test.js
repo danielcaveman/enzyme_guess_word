@@ -1,13 +1,16 @@
 import { mount } from "enzyme";
 import App from "./App";
-import { findByTestAttr } from "../test/testUtils";
-
-jest.mock("./actions");
+import { findByTestAttr, storeFactory } from "../test/testUtils";
+import { Provider } from "react-redux";
 import { getSecretWord as mockGetSecretWord } from "./actions";
 
-const setup = () => {
+jest.mock("./actions");
+
+
+const setup = (initialState={}) => {
   // useEffect is not called on shallow
-  return mount(<App />);
+  const store = storeFactory(initialState);
+  return mount(<Provider store={store}><App /></Provider>);
 };
 
 it("should renders without error", () => {
@@ -22,7 +25,7 @@ describe("getSecretWord", () => {
   });
 
   it("should getSecretWord on app mount", () => {
-    const wrapper = setup();
+    setup();
     expect(mockGetSecretWord).toHaveBeenCalledTimes(1);
   });
   it("should not run getSecretWord on app update", () => {
