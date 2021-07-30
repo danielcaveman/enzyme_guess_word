@@ -18,7 +18,7 @@ const Input = ({ secretWord }) => {
       <form className="form-inline">
         <input
           data-test="input-box"
-          className="mb-2 mx-sm-3"
+          className="mb-2"
           type="text"
           placeholder="Enter Guess"
           value={currentGuess}
